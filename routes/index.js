@@ -15,5 +15,19 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/payseuro', function(req, res) {
+  var params = {
+    TableName : "Countries",
+    ProjectionExpression: "nom",
+    ExpressionAttributeValues: {
+        ":region": "Europe"
+    }
+  };
+  docClient.query(params, function(err, data) {
+    res.render('payseuro', {
+      "payseuro" : data.Items
+    });
+  });
+});
 module.exports = router;
 
